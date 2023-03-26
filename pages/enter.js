@@ -11,7 +11,7 @@ import { doc, getDoc, writeBatch } from 'firebase/firestore'
 // React Hot Toast
 import toast from 'react-hot-toast';
 
-// Defaut EnterPage Export
+// Display sign in and sign out data and export it
 export default function EnterPage() {
   const { user, username } = useContext(UserContext);
 
@@ -47,6 +47,7 @@ function SignInButton() {
   );
 }
 
+// Create Sign Out Page
 function SignOutButton() {
   return(
     <section class="border-4 rounded-lg p-2 px-28 bg-red-400 flex flex-col">
@@ -60,6 +61,7 @@ function SignOutButton() {
   );
 }
 
+// Create Username Form to validate and set username
 function UsernameForm() {
   const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -67,6 +69,7 @@ function UsernameForm() {
 
   const { user, username } = useContext(UserContext);
   
+  // On form submition, set username to firestore
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,6 +83,7 @@ function UsernameForm() {
     await batch.commit();
   };
 
+  // On username change, check if username is valid
   const onChange = async (e) => {
     // Force form value typed in form to match correct format
     const val = e.target.value.toLowerCase();
@@ -99,6 +103,7 @@ function UsernameForm() {
     }
   };
 
+  // On page edits check username validity
   useEffect(() => {
     checkUsername(formValue);
   }, [formValue]);
@@ -153,6 +158,7 @@ function UsernameForm() {
   );
 }
 
+// Create Username Message which displays username validity
 function UsernameMessage({ username, isValid, loading }) {
   if (loading) {
     return <p class="text-slate-800">Checking...</p>;

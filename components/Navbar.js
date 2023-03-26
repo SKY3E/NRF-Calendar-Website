@@ -1,5 +1,7 @@
+// Import link from next
 import Link from 'next/link';
 
+// Display navbar component and export it
 export default function Navbar() {
 
   return (
