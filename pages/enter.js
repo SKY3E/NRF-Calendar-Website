@@ -16,10 +16,7 @@ export default function EnterPage() {
   const { user, username } = useContext(UserContext);
 
   return (
-    <main>
-      <div>
-        <h1>Enter Page</h1>
-      </div>
+    <main class="mt-2">
       {/* Check if user is signed in - if not, show sign in form, else show sign out button, else show sign in button */}
       {user ? 
         !username ? <UsernameForm /> : <SignOutButton />
@@ -37,12 +34,11 @@ function SignInButton() {
   };
 
   return ( 
-    <div>
-      <button className="btn-google" onClick={signInWithGoogle}>
-        <img src={'/google.png'} /> Sign in with Google
-        
+    <div class="border-4 rounded p-2 mx-96 bg-red-400">
+      <button class="h-16 w-56 flex items-stretch space-x-2 border-4 rounded p-2 bg-white hover:bg-gray-50" onClick={signInWithGoogle}>
+        <img src={'/google.png'} /> <div class="text-gray-500 m-auto">Sign in with Google</div>
       </button>
-      <button onClick={() => toast.success("You're currently signed out.")}>Sign-In State</button>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-50 text-gray-500" onClick={() => toast.success("You're currently signed out.")}>Check Sign-In State</button>
     </div>
   );
 }
