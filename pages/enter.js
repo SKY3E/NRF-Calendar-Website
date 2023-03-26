@@ -16,7 +16,7 @@ export default function EnterPage() {
   const { user, username } = useContext(UserContext);
 
   return (
-    <main class="mt-2">
+    <main class="mt-2 flex justify-center items-center">
       {/* Check if user is signed in - if not, show sign in form, else show sign out button, else show sign in button */}
       {user ? 
         !username ? <UsernameForm /> : <SignOutButton />
@@ -34,21 +34,29 @@ function SignInButton() {
   };
 
   return ( 
-    <div class="border-4 rounded p-2 mx-96 bg-red-400">
-      <button class="h-16 w-56 flex items-stretch space-x-2 border-4 rounded p-2 bg-white hover:bg-gray-50" onClick={signInWithGoogle}>
+    <section class="border-4 rounded-lg p-2 px-28 bg-red-400">
+      <div class="text-slate-800">
+        <h2 class="text-xl font-bold">Sign-in</h2>
+        <p class="font-semibold">Access your personalized calendar</p>
+      </div>
+      <button class="h-16 w-56 flex items-stretch space-x-2 border-4 rounded p-2 bg-white hover:bg-gray-50 mt-2" onClick={signInWithGoogle}>
         <img src={'/google.png'} /> <div class="text-gray-500 m-auto">Sign in with Google</div>
       </button>
-      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-50 text-gray-500" onClick={() => toast.success("You're currently signed out.")}>Check Sign-In State</button>
-    </div>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => toast.success("You're currently signed out.")}>Check Sign-In State</button>
+    </section>
   );
 }
 
 function SignOutButton() {
   return(
-    <div>
-      <button onClick={() => auth.signOut()}>Sign out</button>
-      <button onClick={() => toast.success("You're currently signed in.")}>Sign-In State</button>
-    </div>
+    <section class="border-4 rounded-lg p-2 px-28 bg-red-400 flex flex-col">
+      <div class="text-slate-800">
+        <h2 class="text-xl font-bold">Sign-out</h2>
+        <p class="font-semibold">Sign-in to another account</p>
+      </div>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => auth.signOut()}>Sign out</button>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => toast.success("You're currently signed in.")}>Sign-In State</button>
+    </section>
   );
 }
 
@@ -117,22 +125,27 @@ function UsernameForm() {
 
   return (
     !username && (
-      <section>
-        <h3>Choose Username</h3>
-        <form onSubmit={onSubmit}>
-          <input name="username" placeholder="username" value={formValue} onChange={onChange} />
-          <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-          <button type="submit" className="btn-green" disabled={!isValid}>
-            Choose
-          </button>
-
-          <h3>Debug State</h3>
+      <section class="border-4 rounded-lg p-2 px-28 bg-red-400 flex flex-col">
+        <h2 class="text-slate-800 text-xl font-bold">Create Personal Profile</h2>
+        <p class="text-slate-800 text-xl font-semibold">Choose Username</p>
+        <hr class="border-t-4 border-dashed"/>
+        <form class="mt-2 flex space-x-4" onSubmit={onSubmit}>
           <div>
-            Username: {formValue}
-            <br />
-            Loading: {loading.toString()}
-            <br />
-            Username Valid: {isValid.toString()}
+            <input class="border-4 rounded p-2 w-full focus:outline-none focus:border-slate-800 focus:ring-slate-800 focus:ring-1" name="username" placeholder="username" value={formValue} onChange={onChange} />
+            <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
+            <button class="w-56 border-4 rounded p-2 bg-white hover:bg-gray-100 text-gray-500" type="submit" disabled={!isValid}>
+              Choose
+            </button>
+          </div>
+          <div>
+            <h3 class="text-slate-800 text-xl font-semibold">Debug State</h3>
+            <div class="text-slate-800">
+              Username: {formValue}
+              <br />
+              Loading: {loading.toString()}
+              <br />
+              Username Valid: {isValid.toString()}
+            </div>
           </div>
         </form>
       </section>
@@ -142,12 +155,12 @@ function UsernameForm() {
 
 function UsernameMessage({ username, isValid, loading }) {
   if (loading) {
-    return <p>Checking...</p>;
+    return <p class="text-slate-800">Checking...</p>;
   } else if (isValid) {
-    return <p className="text-success">{username} is available!</p>;
+    return <p class="text-slate-800">{username} is available!</p>;
   } else if (username && !isValid) {
-    return <p className="text-danger">That username is taken!</p>;
+    return <p class="text-slate-800">That username is taken!</p>;
   } else {
-    return <p>Something went wrong.</p>;
+    return <p class="text-slate-800">Waiting...</p>;
   }
 }
