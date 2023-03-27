@@ -8,7 +8,7 @@ import { useUserData } from '../lib/hooks';
 import { Toaster } from 'react-hot-toast';
 import 'tailwindcss/tailwind.css';
 // Import and create a font variable
-import { Signika_Negative } from '@next/font/google';
+import { Signika_Negative } from "next/font/google";
 const signikaNegative = Signika_Negative({ 
   weight: ['400', '600', '700'], 
   subsets: ['latin'], 
