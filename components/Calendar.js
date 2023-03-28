@@ -6,6 +6,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export default function Calendar() {
   const [value, setValue] = useState(null);
+  
   return (
     <section>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -17,11 +18,12 @@ export default function Calendar() {
           }}
           renderInput={(params) => <TextField {...params} />}
           sx={{
+            color: 'rgb(30,41,59)',
+            bgcolor: 'rgb(229,231,235)',
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: 'rgb(30,41,59)',
-              borderWidth: 3,
-            }, 
-            color: 'rgb(30,41,59)',
+              borderWidth: 2
+            },
           }}
         />
       </LocalizationProvider>
