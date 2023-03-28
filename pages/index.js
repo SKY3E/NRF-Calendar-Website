@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 // Import useContext and UserContext to access user data
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../lib/context';
+// Import Components
+import Calendar from '../components/Calendar';
 
 // Display home screen and export it
 export default function Home() {
@@ -18,7 +20,7 @@ export default function Home() {
 
   return (
     <main>
-
+      <Calendar />
     </main>
   );
 }
