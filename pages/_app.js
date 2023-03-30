@@ -1,6 +1,5 @@
 // Import website components
-import Navbar from '../components/Navbar';
-import Toolbar from '../components/Toolbar';
+import BottomNavbar from '../components/BottomNavbar';
 // Import UserContext and useUserData
 import { UserContext } from '../lib/context';
 import { useUserData } from '../lib/hooks';
@@ -23,10 +22,9 @@ export default function App({ Component, pageProps }) {
     <main className={`${signikaNegative.variable} font-sans`}>
       {/* Set UserContext to current user data */}
       <UserContext.Provider value={ userData }>
-        < Navbar />
         <Component {...pageProps} />
         <Toaster />
-        <Toolbar />
+        <BottomNavbar />
       </UserContext.Provider>
     </main>
   );

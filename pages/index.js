@@ -1,5 +1,6 @@
 // Import components
 import Auth from '../components/Auth';
+import Modal from '../components/Modal';
 
 // Home page
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <div class="basis-1/3">
         <img class="h-96" src={'/calendar.png'} />
       </div>
+      <Modal />
     </main>
   );
 }
