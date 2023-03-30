@@ -1,6 +1,6 @@
 // Import website components
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Toolbar from '../components/Toolbar';
 // Import UserContext and useUserData
 import { UserContext } from '../lib/context';
 import { useUserData } from '../lib/hooks';
@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }) {
         < Navbar />
         <Component {...pageProps} />
         <Toaster />
-        < Footer />
+        <Toolbar />
       </UserContext.Provider>
     </main>
   );
