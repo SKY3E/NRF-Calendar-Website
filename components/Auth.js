@@ -40,9 +40,9 @@ function SignInButton() {
         <p class="font-semibold">Access your personalized calendar</p>
       </div>
       <button class="h-16 w-56 flex items-stretch space-x-2 border-4 rounded p-2 bg-white hover:bg-gray-50 mt-2" onClick={signInWithGoogle}>
-        <img src={'/google.png'} /> <div class="text-gray-500 m-auto">Sign in with Google</div>
+        <img src={'/google.png'} /> <div class="text-slate-800 m-auto">Sign in with Google</div>
       </button>
-      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => toast.success("You're currently signed out.")}>Check Sign-In State</button>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" onClick={() => toast.success("You're currently signed out.")}>Check Sign-In State</button>
     </section>
   );
 }
@@ -55,8 +55,8 @@ function SignOutButton() {
         <h2 class="text-xl font-bold">Sign-out</h2>
         <p class="font-semibold">Sign-in to another account</p>
       </div>
-      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => auth.signOut()}>Sign out</button>
-      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-gray-500" onClick={() => toast.success("You're currently signed in.")}>Sign-In State</button>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" onClick={() => auth.signOut()}>Sign out</button>
+      <button class="w-56 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" onClick={() => toast.success("You're currently signed in.")}>Sign-In State</button>
     </section>
   );
 }
@@ -138,7 +138,7 @@ function UsernameForm() {
           <div>
             <input class="border-4 rounded p-2 w-full focus:outline-none focus:border-slate-800 focus:ring-slate-800 focus:ring-1" name="username" placeholder="username" value={formValue} onChange={onChange} />
             <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-            <button class="w-56 border-4 rounded p-2 bg-white hover:bg-gray-100 text-gray-500" type="submit" disabled={!isValid}>
+            <button class="w-56 border-4 rounded p-2 bg-white hover:bg-gray-100 text-slate-800" type="submit" disabled={!isValid}>
               Choose
             </button>
           </div>
