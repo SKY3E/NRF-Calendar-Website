@@ -1,5 +1,3 @@
-// Import website components
-import BottomNavbar from '../components/BottomNavbar';
 // Import UserContext and useUserData
 import { UserContext } from '../lib/context';
 import { useUserData } from '../lib/hooks';
@@ -24,7 +22,6 @@ export default function App({ Component, pageProps }) {
       <UserContext.Provider value={ userData }>
         <Component {...pageProps} />
         <Toaster />
-        <BottomNavbar />
       </UserContext.Provider>
     </main>
   );
