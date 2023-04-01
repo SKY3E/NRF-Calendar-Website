@@ -1,12 +1,12 @@
 export default function BottomNavbar({ setShowModal, setModalContent }) {
   const handleCalendarSettingsClick = () => {
     setShowModal(true);
-    setModalContent(0);
+    setModalContent(1);
   };
 
   const handleProfileClick = () => {
     setShowModal(true);
-    setModalContent(1);
+    setModalContent(0);
   };
 
   const handleAddItemClick = () => {

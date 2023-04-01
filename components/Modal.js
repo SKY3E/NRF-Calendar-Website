@@ -1,10 +1,11 @@
 import React from 'react'
-import Auth from '../components/Auth'
+import Auth from './Auth'
+import AddItem from './AddItem';
 
 export const Modal = ({ isVisible, onClose, modalContent }) => {
   if (!isVisible) return null;
 
-  if (modalContent === 1) {
+  if (modalContent === 0) {
     return (
       <div class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center" onClick={() => onClose()}>
         <div class="w-[600px] flex flex-col">
@@ -21,7 +22,7 @@ export const Modal = ({ isVisible, onClose, modalContent }) => {
     );
   }
 
-  if (modalContent === 0) {
+  if (modalContent === 1) {
     return (
       <div class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center" onClick={() => onClose()}>
         <div class="w-[600px] flex flex-col">
@@ -40,7 +41,7 @@ export const Modal = ({ isVisible, onClose, modalContent }) => {
 
   if (modalContent === 2) {
     return (
-      <div class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center" onClick={() => onClose()}>
+      <div class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
         <div class="w-[600px] flex flex-col">
           <button class="place-self-end mb-2" onClick={() => onClose()}>
             <svg class="h-8 w-8 p-2 rounded-full bg-slate-500 hover:bg-blue-900" fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -48,7 +49,7 @@ export const Modal = ({ isVisible, onClose, modalContent }) => {
             </svg>
           </button>
           <div class="bg-white p-2 rounded-lg">
-            <h1>Add Item</h1>
+            <AddItem />
           </div>
         </div>
       </div>
