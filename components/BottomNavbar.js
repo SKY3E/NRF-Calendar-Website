@@ -1,4 +1,5 @@
 export default function BottomNavbar({ setShowModal, setModalContent }) {
+  // Update prop configurations on button clicks
   const handleCalendarSettingsClick = () => {
     setShowModal(true);
     setModalContent(1);

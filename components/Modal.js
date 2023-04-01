@@ -1,15 +1,18 @@
+// Import react components
 import React from 'react'
+// Import website components
 import Auth from './Auth'
 import AddItem from './AddItem';
 import ChooseCalendar from './ChooseCalendar';
-import { useState } from 'react';
 
-export const Modal = (props) => {
+// Display modal according to prop configurations
+export default function Modal(props){
   const { isVisible, onClose, modalContent } = props;
   const handleCalendarTypeChange = (calendarType) => {
     props.onCalendarTypeChange(calendarType);
   };
 
+  // If prop config is set to not visible then return null
   if (!isVisible) return null;
 
   if (modalContent === 0) {
@@ -63,5 +66,3 @@ export const Modal = (props) => {
     );
   }
 }
-
-export default Modal;

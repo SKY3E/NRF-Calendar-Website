@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 export default function ChooseCalendar(props) {
+  // Retrieve dropdown value and pass it to props
   const handleCalendarTypeChange = (event) => {
     const newCalendarType = event.target.value;
     props.onCalendarTypeChange(newCalendarType);

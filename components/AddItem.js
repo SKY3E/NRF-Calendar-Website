@@ -1,26 +1,29 @@
+// Import firebase & firestore components
 import { doc, collection, setDoc } from 'firebase/firestore';
 import { auth } from '../lib/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useForm } from 'react-hook-form';
 import { firestore } from '../lib/firebase';
+// Import react form component
+import { useForm } from 'react-hook-form';
 // React Hot Toast
 import toast from 'react-hot-toast';
 
 export default function AddItem() {
+  // Set form properties and variables
   const { register, handleSubmit, reset, formState, formState: { errors } } = useForm();
   const { isValid, isDirty } = formState;
-
+  
+  // Create a new item
   const createItem = async ({ title, details, date, time }) => {
+    // Get authenticated user
     const UserId = auth.currentUser.uid;
 
-    // Assuming you have a user document reference
+    // Create a reference to a subcollection in the user doc
+    // And create the subcollection if it doesn't exist
     const userDocRef = doc(firestore, 'users', UserId);
     const userSubCollectionName = UserId + '-items';
-
-    // Create a subcollection within the user document
     const subCollectionRef = collection(userDocRef, userSubCollectionName);
 
-    // Add a document to the subcollection
+    // Add a document to the subcollection with all the data
     const newDocRef = await setDoc(doc(subCollectionRef), {
       // Add data for the new document
       title: title,
@@ -28,9 +31,11 @@ export default function AddItem() {
       date: date,
       time: time
     });
+
+    // Reset form register values and send toast to display success message
     reset({ title, details, date, time });
-    console.log('Document written with ID: ', newDocRef.id);
     toast.success('Successfully added in a item to your calendar!');
+    toast.info('Document written with ID: ', newDocRef.id);
   }
 
 

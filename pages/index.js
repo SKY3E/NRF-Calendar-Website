@@ -1,19 +1,24 @@
-// Import components
-import Auth from '../components/Auth';
-import Modal from '../components/Modal';
-import React, { useState } from "react";
+// Import react components
+import React, { useState, useEffect } from "react";
 // Import website components
 import BottomNavbar from '../components/BottomNavbar';
+import Modal from '../components/Modal';
 
-// Home page
+// Display home page
 export default function Home() {
+  // Define modal states
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(0);
+  const [calendarType, setCalendarType] = useState('month');
 
+  // Update calendarType state
   function handleCalendarTypeChange(newCalendarType) {
-    console.log('New calendar type:', newCalendarType);
-    const calendarType = newCalendarType;
+    setCalendarType(newCalendarType);
   }
+  // Display new calendarType to the console once updated
+  useEffect(() => {
+    console.log('Calendar type:', calendarType);
+  }, [calendarType]);
 
   // Define the content for each box
   const boxContent = [
