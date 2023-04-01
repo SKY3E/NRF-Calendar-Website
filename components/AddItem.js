@@ -31,19 +31,19 @@ export default function AddItem() {
 
 
   return (
-    <section class="border-4 rounded-lg p-2 px-28 bg-red-400">
-      <div class="text-slate-800">
-        <h2 class="text-xl font-bold">Add Item</h2>
+    <section className="border-4 rounded-lg p-2 px-28 bg-red-400">
+      <div className="text-slate-800">
+        <h2 className="text-xl font-bold">Add Item</h2>
         <form onSubmit={handleSubmit(createItem)}>
           <h3>Choose item title :</h3>
-          <input class="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('title', { required: true })} type="text" />
-          <h3 class="mt-2">Choose item details :</h3>
-          <textarea class="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('details', { required: false })}></textarea>         
+          <input className="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('title', { required: true })} type="text" />
+          <h3 className="mt-2">Choose item details :</h3>
+          <textarea className="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('details', { required: false })}></textarea>         
           <h3>Choose item date :</h3>
-          <input class="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('date', { required: true })} type="date" />
+          <input className="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('date', { required: true })} type="date" />
           <h3>Choose item time :</h3>
-          <input class="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('time', { required: true })} type="time" />
-          <input class="w-80 border-4 rounded p-2 mt-6 bg-white hover:bg-gray-100 text-slate-800" type="submit" disabled={!isDirty || !isValid} />
+          <input className="w-80 border-4 rounded p-2 mt-2 bg-white hover:bg-gray-100 text-slate-800" {...register('time', { required: true })} type="time" />
+          <input className="w-80 border-4 rounded p-2 mt-6 bg-white hover:bg-gray-100 text-slate-800" type="submit" disabled={!isDirty || !isValid} />
         </form>
       </div>
     </section>

@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <main class="mt-2 flex flex-row justify-around items-center">
+      <main className="mt-2 flex flex-row justify-around items-center">
         <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)}/>
       </main>
       <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
