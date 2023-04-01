@@ -16,7 +16,7 @@ export default function Auth() {
   const { user, username } = useContext(UserContext);
 
   return (
-    <section>
+    <section className="w-full">
       {/* Check if user is signed in - if not, show sign in form, else show sign out button, else show sign in button */}
       {user ? 
         !username ? <UsernameForm /> : <SignOutButton />

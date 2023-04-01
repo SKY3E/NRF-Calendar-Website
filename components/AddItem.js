@@ -3,6 +3,8 @@ import { auth } from '../lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { firestore } from '../lib/firebase';
+// React Hot Toast
+import toast from 'react-hot-toast';
 
 export default function AddItem() {
   const { register, handleSubmit, reset, formState, formState: { errors } } = useForm();
@@ -27,6 +29,8 @@ export default function AddItem() {
       time: time
     });
     reset({ title, details, date, time });
+    console.log('Document written with ID: ', newDocRef.id);
+    toast.success('Successfully added in a item to your calendar!');
   }
 
 
