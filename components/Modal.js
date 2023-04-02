@@ -8,8 +8,12 @@ import ChooseCalendar from './ChooseCalendar';
 // Display modal according to prop configurations
 export default function Modal(props){
   const { isVisible, onClose, modalContent } = props;
+
   const handleCalendarTypeChange = (calendarType) => {
     props.onCalendarTypeChange(calendarType);
+  };
+  const handleDateTypeChange = (date) => {
+    props.onDateTypeChange(date);
   };
 
   // If prop config is set to not visible then return null
@@ -42,7 +46,7 @@ export default function Modal(props){
             </svg>
           </button>
           <div className="bg-white p-2 rounded-lg">
-            <ChooseCalendar onCalendarTypeChange={handleCalendarTypeChange}/>
+            <ChooseCalendar onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange}/>
           </div>
         </div>
       </div>
