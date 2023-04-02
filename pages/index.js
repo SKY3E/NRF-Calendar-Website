@@ -30,6 +30,8 @@ export default function Home() {
     getDays(calendarType, dateType);
   }, [dateType]);
 
+  // Function gets the wrong day (day before instead of current)
+  console.warn('getDays() function is not working correctly. It is getting the wrong day (day before instead of current).');
   // Get days in week or month
   function getDays(calendarType, dateType) {
     if (calendarType === 'day') {

@@ -1,4 +1,4 @@
-export default function dateViewDisplayer(props){
+export default function DateView(props){
   const dateType = props.dateType;
 
   const handleDateTypeChange = (event) => {
