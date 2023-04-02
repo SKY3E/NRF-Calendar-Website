@@ -20,14 +20,68 @@ export default function Home() {
   useEffect(() => {
     console.log('Calendar type:', calendarType);
   }, [calendarType]);
-
+  // Update dateType state
   function handleDateTypeChange(newDateType) {
     setDateType(newDateType);
   }
   // Display new dateType to the console once updated
   useEffect(() => {
     console.log('Date type:', dateType);
+    getDays(calendarType, dateType);
   }, [dateType]);
+
+  // Get days in week or month
+  function getDays(calendarType, dateType) {
+    if (calendarType === 'day') {
+      if (!dateType) return;
+      let days = [];
+      days.push(new Date(dateType));
+      
+      console.log(days);
+      return days;
+    }
+    if (calendarType === 'week') {
+      if (!dateType) return;
+      // split the week value into year and week numbers
+      let [year, week] = dateType.split('-W');
+
+      // create a date for the first day of the week
+      let firstDay = new Date(year, 0, 1 + (week - 1) * 7);
+      // adjust for the day of the week (0 = Sunday)
+      firstDay.setDate(firstDay.getDate() - firstDay.getDay() + 1);
+
+      let days = [];
+      // loop through each day of the week
+      for (let i = 0; i < 7; i++) {
+        let day = new Date(firstDay);
+        day.setDate(firstDay.getDate() + i);
+        days.push(day);
+      }
+
+      console.log(days);
+      return days;
+    }
+    if (calendarType === 'month') {
+      if (!dateType) return;
+      // split the month value into year and month numbers
+      let [year, month] = dateType.split('-');
+
+      let days = [];
+      // loop through each day of the month
+      for (let day = 1; day <= 31; day++) {
+        let date = new Date(year, month - 1, day);
+        // break out of the loop if the month changes
+        if (date.getMonth() != month - 1) {
+          break;
+        }
+        days.push(date);
+      }
+
+      console.log(days);
+      return days;
+    }
+  }
+
 
   // Define the content for each box
   const boxContent = [
