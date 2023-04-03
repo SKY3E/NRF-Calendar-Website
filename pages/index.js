@@ -9,7 +9,7 @@ export default function Home() {
   // Define modal states
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(0);
-  const [calendarType, setCalendarType] = useState('month');
+  const [calendarType, setCalendarType] = useState('day');
   const [dateType, setDateType] = useState(null);
 
   // Update calendarType state
@@ -30,14 +30,14 @@ export default function Home() {
     getDays(calendarType, dateType);
   }, [dateType]);
 
-  // Function gets the wrong day (day before instead of current)
-  console.warn('getDays() function is not working correctly. It is getting the wrong day (day before instead of current).');
   // Get days in week or month
   function getDays(calendarType, dateType) {
     if (calendarType === 'day') {
       if (!dateType) return;
       let days = [];
-      days.push(new Date(dateType));
+      let day = new Date(dateType);
+      day.setDate(day.getDate() + 1);
+      days.push(day);
       
       console.log(days);
       return days;
