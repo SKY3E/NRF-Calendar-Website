@@ -6,11 +6,14 @@ import Modal from '../components/Modal';
 
 // Display home page
 export default function Home() {
-  // Define modal states
+  // Set modal display state
   const [showModal, setShowModal] = useState(false);
+  // Set modal content
   const [modalContent, setModalContent] = useState(0);
+  // Set modal calendar type (eg. day, week, month)
   const [calendarType, setCalendarType] = useState('day');
-  const [dateType, setDateType] = useState(null);
+  // Set modal date (eg. 04/05/2021)
+  const [dateType, setDateType] = useState(new Date());
 
   // Update calendarType state
   function handleCalendarTypeChange(newCalendarType) {
@@ -27,7 +30,8 @@ export default function Home() {
   // Display new dateType to the console once updated
   useEffect(() => {
     console.log('Date type:', dateType);
-    getDays(calendarType, dateType);
+    console.log('Converted dates:', getDays(calendarType, dateType));
+    getCalendarItems();
   }, [dateType]);
 
   // Get days in week or month
@@ -39,7 +43,6 @@ export default function Home() {
       day.setDate(day.getDate() + 1);
       days.push(day);
       
-      console.log(days);
       return days;
     }
     if (calendarType === 'week') {
@@ -60,7 +63,6 @@ export default function Home() {
         days.push(day);
       }
 
-      console.log(days);
       return days;
     }
     if (calendarType === 'month') {
@@ -79,14 +81,20 @@ export default function Home() {
         days.push(date);
       }
 
-      console.log(days);
       return days;
     }
   }
 
+  // Retrieve calendar items from database
+  function getCalendarItems() {
+    const daysArr = getDays(calendarType, dateType);
+    console.log('List length:', daysArr.length);
+    boxContent.length = 0;
+    boxContent.push("Kiwi");
+  }
 
   // Define the content for each box
-  const boxContent = [
+  let boxContent = [
     'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
     'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
     'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
