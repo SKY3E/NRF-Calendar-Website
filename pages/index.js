@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 // Import website components
 import BottomNavbar from '../components/BottomNavbar';
 import Modal from '../components/Modal';
+// Import firebase components
+import { } from 'firebase/firestore';
+import { firestore } from '../lib/firebase';
 
 // Display home page
 export default function Home() {
@@ -14,6 +17,8 @@ export default function Home() {
   const [calendarType, setCalendarType] = useState('day');
   // Set modal date (eg. 04/05/2021)
   const [dateType, setDateType] = useState(new Date());
+  // Set calendar items
+  const [calendarItems, setCalendarItems] = useState([]);
 
   // Update calendarType state
   function handleCalendarTypeChange(newCalendarType) {
@@ -87,35 +92,31 @@ export default function Home() {
 
   // Retrieve calendar items from database
   function getCalendarItems() {
+    // Get selected days
     const daysArr = getDays(calendarType, dateType);
     console.log('List length:', daysArr.length);
-    boxContent.length = 0;
-    boxContent.push("Kiwi");
+    
+    var tempCalendarItems = calendarItems.slice();
+    tempCalendarItems = [];
+    daysArr.forEach((day) => {
+      tempCalendarItems.push("New Item");
+    });
+    setCalendarItems(tempCalendarItems);
   }
 
-  // Define the content for each box
-  let boxContent = [
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-    'Box', 'Box', 'Box', 'Box', 'Box', 'Box', 'Box',
-  ];
-
   return (
-    <>
-      <main className="flex flex-row justify-around items-center">
+    <main>
+      <section className="flex flex-row justify-around items-center">
         <section className="flex justify-center items-center h-screen">
           <div className="grid grid-cols-7 grid-rows-6 gap-4 border-4 rounded-lg p-2 px-28 bg-red-400">
-            {boxContent.map((content, index) => (
+            {calendarItems.map((content, index) => (
               <div key={index} className="bg-gray-200 text-slate-800 border-4 rounded">{content + " " + (index+1)}</div>
             ))}
           </div>
         </section>
         <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
-      </main>
+      </section>
       <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
-    </>
+    </main>
   );
 }

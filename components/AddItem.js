@@ -35,7 +35,6 @@ export default function AddItem() {
     // Reset form register values and send toast to display success message
     reset({ title, details, date, time });
     toast.success('Successfully added in a item to your calendar!');
-    toast.info('Document written with ID: ', newDocRef.id);
   }
 
 
