@@ -42,6 +42,7 @@ export default function Home() {
   // Display new calendarType to the console once updated
   useEffect(() => {
     console.log('Calendar type:', calendarType);
+    console.log('Calendar By Date:', calendarItemsByDate);
   }, [calendarType]);
   // Update dateType state
   function handleDateTypeChange(newDateType) {
@@ -127,12 +128,18 @@ export default function Home() {
         console.log('Details:', item.details);
         const date = new Date(Date.parse(item.dateTime));
         const isoDate = date.toISOString().substring(0, 10);
+
         tempCalendarItems.push(item.details);
         tempCalendarItems.push(date);
         console.log('+1');
+
+        if (!(isoDate in calendarItemsByDate)) {
+          calendarItemsByDate[isoDate] = [];
+        }
+        calendarItemsByDate[isoDate].push(item);
       });
-      tempCalendarItems.shift();
       setCalendarItems(tempCalendarItems);
+      setCalendarItemsByDate(calendarItemsByDate);
     }
   }
 
