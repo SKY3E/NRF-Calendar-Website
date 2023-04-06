@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import BottomNavbar from '../components/BottomNavbar';
 import Modal from '../components/Modal';
 // Import firebase components
-import { } from 'firebase/firestore';
-import { firestore } from '../lib/firebase';
+import { firestore, auth } from '../lib/firebase';
+import { collection, query, where, getDocs, doc } from 'firebase/firestore';
 
 // Display home page
 export default function Home() {
@@ -19,6 +19,21 @@ export default function Home() {
   const [dateType, setDateType] = useState(new Date());
   // Set calendar items
   const [calendarItems, setCalendarItems] = useState([]);
+  const [calendarItemsByDate, setCalendarItemsByDate] = useState([]);
+  // Set user state
+  const [user, setUser] = useState(null);
+
+  // Update user state
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setUser(user.uid);
+      } else {
+        setUser(null);
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   // Update calendarType state
   function handleCalendarTypeChange(newCalendarType) {
@@ -91,17 +106,34 @@ export default function Home() {
   }
 
   // Retrieve calendar items from database
-  function getCalendarItems() {
+  async function getCalendarItems() {
     // Get selected days
     const daysArr = getDays(calendarType, dateType);
     console.log('List length:', daysArr.length);
     
-    var tempCalendarItems = calendarItems.slice();
-    tempCalendarItems = [];
-    daysArr.forEach((day) => {
-      tempCalendarItems.push("New Item");
-    });
-    setCalendarItems(tempCalendarItems);
+    var tempCalendarItems = [];
+
+    if (user != null){
+      const userDocRef = doc(firestore, 'users', user);
+      const itemsRef = collection(userDocRef, user + '-items');
+      console.log('itemsRef:', itemsRef);
+
+      const itemSnapshot = await getDocs(itemsRef);
+
+      itemSnapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        tempCalendarItems.push(doc.data());
+        const item = doc.data();
+        console.log('Details:', item.details);
+        const date = new Date(Date.parse(item.dateTime));
+        const isoDate = date.toISOString().substring(0, 10);
+        tempCalendarItems.push(item.details);
+        tempCalendarItems.push(date);
+        console.log('+1');
+      });
+      tempCalendarItems.shift();
+      setCalendarItems(tempCalendarItems);
+    }
   }
 
   return (

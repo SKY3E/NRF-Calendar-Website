@@ -23,13 +23,15 @@ export default function AddItem() {
     const userSubCollectionName = UserId + '-items';
     const subCollectionRef = collection(userDocRef, userSubCollectionName);
 
+    const dateString = date + 'T' + time;
+    const dateTime = new Date(dateString);
+
     // Add a document to the subcollection with all the data
     const newDocRef = await setDoc(doc(subCollectionRef), {
       // Add data for the new document
       title: title,
       details: details,
-      date: date,
-      time: time
+      dateTime: dateTime.toISOString(),
     });
 
     // Reset form register values and send toast to display success message
