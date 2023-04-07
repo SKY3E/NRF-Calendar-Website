@@ -12,10 +12,10 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false); // Set modal display state
   const [modalContent, setModalContent] = useState(0); // Set modal content
   const [calendarType, setCalendarType] = useState('day'); // Set modal calendar type (eg. day, week, month)
-  const [calendarDates, setCalendarDates] = useState([]); // Set all calendar dates
+  const [calendarDates, setCalendarDates] = useState([]); // Set all calendar dates (All dates found in firebase)
   const [dateType, setDateType] = useState(new Date()); // Set modal date (eg. 04/05/2021)
-  const [calendarItems, setCalendarItems] = useState([]); // Set calendar items
-  const [remoteCalendarItems, setRemoteCalendarItems] = useState([]); // Set calendar items by date
+  const [calendarItems, setCalendarItems] = useState([]); // Set calendar items (All dates)
+  const [remoteCalendarItems, setRemoteCalendarItems] = useState([]); // Set calendar items by date (Viewed dates)
   const [user, setUser] = useState(null); // Set user state
 
   // Update user state
@@ -39,13 +39,14 @@ export default function Home() {
     setDateType(newDateType);
   }
 
-  // Reset calendar items
+  // Retrieve calendar items when dateType or user state changes
   useEffect(() => {
     getCalendarItems();
   }, [dateType, user]);
 
-  // Get days in week or month
+  // Retrieve Javascript formatted dates for a day, week or month
   function getDays(calendarType, dateType) {
+    // Retrieve day if chosen calendarType is day
     if (calendarType === 'day') {
       if (!dateType) return;
       let days = [];
@@ -55,11 +56,10 @@ export default function Home() {
       
       return days;
     }
+    // Retrieve week if chosen calendarType is week
     if (calendarType === 'week') {
       if (!dateType) return;
-      // split the week value into year and week numbers
       let [year, week] = dateType.split('-W');
-
       // create a date for the first day of the week
       let firstDay = new Date(year, 0, 1 + (week - 1) * 7);
       // adjust for the day of the week (0 = Sunday)
@@ -75,9 +75,9 @@ export default function Home() {
 
       return days;
     }
+    // Retrieve month if chosen calendarType is month
     if (calendarType === 'month') {
       if (!dateType) return;
-      // split the month value into year and month numbers
       let [year, month] = dateType.split('-');
 
       let days = [];
@@ -97,7 +97,7 @@ export default function Home() {
 
   // Retrieve calendar items from database
   async function getCalendarItems() {
-    // Get selected days : Get days in javascript format => Loop through dates => Convert to ISO format => Push to array
+    // Get selected days : Get days in javascript format => Loop through dates => Convert to ISO format => Push to array => Set state
     var tempCalendarDates = [];
     const daysArr = getDays(calendarType, dateType);
     daysArr.forEach((date) => {
@@ -106,6 +106,7 @@ export default function Home() {
     });
     setCalendarDates(tempCalendarDates);
     
+    // Get calendar items : Get items from database => Loop through items => Push to array => Set state
     var tempCalendarItems = [];
     if (user != null){
       // Retrieve calendar items from user subcollection
@@ -113,21 +114,16 @@ export default function Home() {
       const itemsRef = collection(userDocRef, user + '-items');
       const itemSnapshot = await getDocs(itemsRef);
 
-      // Loop through each calendar item
       itemSnapshot.forEach((doc) => {
-        const item = doc.data();
-        const date = new Date(Date.parse(item.dateTime));
-        const isoItemDate = date.toISOString().substring(0, 10);
-
-        tempCalendarItems.push(item);
+        tempCalendarItems.push(doc.data());
       });
       setCalendarItems(tempCalendarItems);
-      console.log('Calendar Items:', tempCalendarItems);
-      // configureRemoteCalendarItems(tempCalendarItems); 
     }
   }
 
+  // Retrieve calendar items by date
   useEffect(() => {
+    // Get calendar items : Loop through calendar items => Loop through calendar dates => Compare dates => Push to array => Set state
     var remoteCalendarItems = [];
     calendarItems.forEach(function (item) {
       const itemDate = new Date(Date.parse(item.dateTime));
@@ -139,16 +135,15 @@ export default function Home() {
       });
     });
     setRemoteCalendarItems(remoteCalendarItems);
-    console.log('Remote Calendar Items:', remoteCalendarItems)
   }, [calendarItems, calendarDates]);
 
   return (
     <main>
       <section className="flex flex-row justify-around items-center">
         <section className="flex justify-center items-center h-screen">
-          <div className="grid grid-cols-7 grid-rows-6 gap-4 border-4 rounded-lg p-2 px-28 bg-red-400">
+          <div className="border-4 rounded-lg p-2 px-28 bg-red-400">
             {remoteCalendarItems.map((content, index) => (
-              <div key={index} className="bg-gray-200 text-slate-800 border-4 rounded">{content + " " + (index+1)}</div>
+              <div key={index} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2">{content.details + " " + (index+1)}</div>
             ))}
           </div>
         </section>
