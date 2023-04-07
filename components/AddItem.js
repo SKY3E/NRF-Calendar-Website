@@ -25,6 +25,7 @@ export default function AddItem() {
 
     const dateString = date + 'T' + time;
     const dateTime = new Date(dateString);
+    console.log(dateTime.toISOString());
 
     // Add a document to the subcollection with all the data
     const newDocRef = await setDoc(doc(subCollectionRef), {
