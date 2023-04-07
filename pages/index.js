@@ -5,7 +5,7 @@ import BottomNavbar from '../components/BottomNavbar';
 import Modal from '../components/Modal';
 // Import firebase components
 import { firestore, auth } from '../lib/firebase';
-import { collection, getDocs, doc } from 'firebase/firestore';
+import { collection, query, where, limit, getDocs, doc, deleteDoc } from 'firebase/firestore';
 
 // Display home page
 export default function Home() {
@@ -121,6 +121,24 @@ export default function Home() {
     }
   }
 
+  // Delete calendar item from database
+  async function deleteItem(index){
+    const itemRef = remoteCalendarItems[index];
+    const userDocRef = doc(firestore, 'users', user);
+    const itemsRef = collection(userDocRef, user + '-items');
+
+    const filteredQuery = query(itemsRef, 
+      where("dateTime", "==", itemRef.dateTime), 
+      where("details", "==", itemRef.details), 
+      where("title", "==", itemRef.title),
+      limit(1) // Limit the number of documents returned to one
+    );
+
+    const matchingDoc = (await getDocs(filteredQuery)).docs[0];
+    await deleteDoc(matchingDoc.ref);
+    getCalendarItems();
+  }
+
   // Retrieve calendar items by date
   useEffect(() => {
     // Get calendar items : Loop through calendar items => Loop through calendar dates => Compare dates => Push to array => Set state
@@ -140,10 +158,18 @@ export default function Home() {
   return (
     <main>
       <section className="flex flex-row justify-around items-center">
-        <section className="flex justify-center items-center h-screen">
-          <div className="border-4 rounded-lg p-2 px-28 bg-red-400">
+        <section className="flex justify-center items-center h-screen w-full">
+          <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
             {remoteCalendarItems.map((content, index) => (
-              <div key={index} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2">{content.details + " " + (index+1)}</div>
+              <div key={index}>
+                <div className="flex bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">
+                  <div key={index + "-dateTime"} className="border-r-2 border-red-400 px-2">{content.dateTime}</div>
+                  <div key={index + "-title"} className="border-r-2 border-red-400 px-2">{content.title}</div>
+                  <button onClick={() => deleteItem(index)} key={index + "-delete"} className="px-2 mr-2 bg-red-400 text-white">Delete</button>
+                  <button key={index + "-viewdetails"} className="px-2 bg-red-400 text-white">View</button>
+                </div>
+                <div key={index + "-details"} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">Details : {content.details}</div>
+              </div>
             ))}
           </div>
         </section>
