@@ -160,13 +160,14 @@ export default function Home() {
       <section className="flex flex-row justify-around items-center">
         <section className="flex justify-center items-center h-screen w-full">
           <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
+          <h1 className="text-white text-xl">Calendar Items :</h1>
             {remoteCalendarItems.map((content, index) => (
               <div key={index}>
                 <div className="flex bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">
                   <div key={index + "-dateTime"} className="border-r-2 border-red-400 px-2">{content.dateTime}</div>
                   <div key={index + "-title"} className="border-r-2 border-red-400 px-2">{content.title}</div>
-                  <button onClick={() => deleteItem(index)} key={index + "-delete"} className="px-2 mr-2 bg-red-400 text-white">Delete</button>
-                  <button key={index + "-viewdetails"} className="px-2 bg-red-400 text-white">View</button>
+                  <button onClick={() => deleteItem(index)} key={index + "-delete"} className="px-2 mr-2 bg-red-400 text-white hover:bg-red-500">Delete</button>
+                  <button key={index + "-viewdetails"} className="px-2 bg-red-400 text-white hover:bg-red-500">View</button>
                 </div>
                 <div key={index + "-details"} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">Details : {content.details}</div>
               </div>
