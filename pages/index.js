@@ -158,9 +158,9 @@ export default function Home() {
   return (
     <main>
       <section className="flex flex-row justify-around items-center">
-        <section className="flex justify-center items-center h-screen w-full">
+        <section className="flex flex-col justify-center items-center h-screen w-full">
+          <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Calendar Items :</h1>
           <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
-          <h1 className="text-white text-xl">Calendar Items :</h1>
             {remoteCalendarItems.map((content, index) => (
               <div key={index}>
                 <div className="flex bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">
