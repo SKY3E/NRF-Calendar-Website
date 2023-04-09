@@ -122,7 +122,7 @@ export default function Home() {
   }
 
   // Delete calendar item from database
-  async function deleteItem(index){
+  async function deleteItem(index) {
     const itemRef = remoteCalendarItems[index];
     const userDocRef = doc(firestore, 'users', user);
     const itemsRef = collection(userDocRef, user + '-items');
@@ -139,12 +139,18 @@ export default function Home() {
     getCalendarItems();
   }
 
+  // Sort calendar items by date
+  function sortCalendarItems() {
+    return remoteCalendarItems.sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
+  }
+
   // Retrieve calendar items by date
   useEffect(() => {
     // Get calendar items : Loop through calendar items => Loop through calendar dates => Compare dates => Push to array => Set state
     var remoteCalendarItems = [];
     calendarItems.forEach(function (item) {
       const itemDate = new Date(Date.parse(item.dateTime));
+      console.warn('Error when running week view then day view.');
       const isoItemDate = itemDate.toISOString().substring(0, 10);
       calendarDates.forEach(function (date) {
         if (isoItemDate === date) {
@@ -154,6 +160,11 @@ export default function Home() {
     });
     setRemoteCalendarItems(remoteCalendarItems);
   }, [calendarItems, calendarDates]);
+
+  // Sort calendar items by date when remoteCalendarItems state changes
+  useEffect(() => {
+    setRemoteCalendarItems(sortCalendarItems());
+  }, [remoteCalendarItems]);
 
   return (
     <main>
