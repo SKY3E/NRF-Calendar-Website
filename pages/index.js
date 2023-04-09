@@ -11,6 +11,7 @@ import { collection, query, where, limit, getDocs, doc, deleteDoc } from 'fireba
 export default function Home() {
   const [showModal, setShowModal] = useState(false); // Set modal display state
   const [modalContent, setModalContent] = useState(0); // Set modal content
+  const [recentlyCreatedItem, setRecentlyCreatedItem] = useState(null); // Set recently created item
   const [calendarType, setCalendarType] = useState('day'); // Set modal calendar type (eg. day, week, month)
   const [calendarDates, setCalendarDates] = useState([]); // Set all calendar dates (All dates found in firebase)
   const [dateType, setDateType] = useState(new Date()); // Set modal date (eg. 04/05/2021)
@@ -30,19 +31,20 @@ export default function Home() {
     return unsubscribe;
   }, []);
 
-  // Update calendarType state
   function handleCalendarTypeChange(newCalendarType) {
     setCalendarType(newCalendarType);
   }
-  // Update dateType state
   function handleDateTypeChange(newDateType) {
     setDateType(newDateType);
+  }
+  function handleItemCreation(title) {
+    setRecentlyCreatedItem(title);
   }
 
   // Retrieve calendar items when dateType or user state changes
   useEffect(() => {
     getCalendarItems();
-  }, [dateType, user]);
+  }, [dateType, user, recentlyCreatedItem]);
 
   // Retrieve Javascript formatted dates for a day, week or month
   function getDays(calendarType, dateType) {
@@ -148,16 +150,17 @@ export default function Home() {
   useEffect(() => {
     // Get calendar items : Loop through calendar items => Loop through calendar dates => Compare dates => Push to array => Set state
     var remoteCalendarItems = [];
-    calendarItems.forEach(function (item) {
-      const itemDate = new Date(Date.parse(item.dateTime));
-      console.warn('Error when running week view then day view.');
-      const isoItemDate = itemDate.toISOString().substring(0, 10);
-      calendarDates.forEach(function (date) {
-        if (isoItemDate === date) {
-          remoteCalendarItems.push(item);
-        }
+    if (calendarItems.length != 0) {
+      calendarItems.forEach(function (item) {
+        const itemDate = new Date(Date.parse(item.dateTime));
+        const isoItemDate = itemDate.toISOString().substring(0, 10);
+        calendarDates.forEach(function (date) {
+          if (isoItemDate === date) {
+            remoteCalendarItems.push(item);
+          }
+        });
       });
-    });
+    }
     setRemoteCalendarItems(remoteCalendarItems);
   }, [calendarItems, calendarDates]);
 
@@ -185,7 +188,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
+        <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
       </section>
       <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
     </main>

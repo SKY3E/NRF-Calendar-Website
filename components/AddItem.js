@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 // React Hot Toast
 import toast from 'react-hot-toast';
 
-export default function AddItem() {
+export default function AddItem(props) {
   // Set form properties and variables
   const { register, handleSubmit, reset, formState, formState: { errors } } = useForm();
   const { isValid, isDirty } = formState;
@@ -28,7 +28,7 @@ export default function AddItem() {
     console.log(dateTime.toISOString());
 
     // Add a document to the subcollection with all the data
-    const newDocRef = await setDoc(doc(subCollectionRef), {
+    await setDoc(doc(subCollectionRef), {
       // Add data for the new document
       title: title,
       details: details,
@@ -38,6 +38,12 @@ export default function AddItem() {
     // Reset form register values and send toast to display success message
     reset({ title, details, date, time });
     toast.success('Successfully added in a item to your calendar!');
+    // Pass new item through props => Reload Calendar View
+    handleItemCreation(title);
+  }
+
+  const handleItemCreation = (title) => {
+    props.onItemCreation(title);
   }
 
 

@@ -15,6 +15,9 @@ export default function Modal(props){
   const handleDateTypeChange = (date) => {
     props.onDateTypeChange(date);
   };
+  const handleItemCreation = (title) => {
+    props.onItemCreation(title);
+  };
 
   // If prop config is set to not visible then return null
   if (!isVisible) return null;
@@ -63,7 +66,7 @@ export default function Modal(props){
             </svg>
           </button>
           <div className="bg-white p-2 rounded-lg">
-            <AddItem />
+            <AddItem onItemCreation={handleItemCreation}/>
           </div>
         </div>
       </div>
