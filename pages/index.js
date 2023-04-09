@@ -169,28 +169,60 @@ export default function Home() {
     setRemoteCalendarItems(sortCalendarItems());
   }, [remoteCalendarItems]);
 
-  return (
-    <main>
-      <section className="flex flex-row justify-around items-center">
-        <section className="flex flex-col justify-center items-center h-screen w-full">
-          <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Calendar Items :</h1>
-          <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
-            {remoteCalendarItems.map((content, index) => (
-              <div key={index}>
-                <div className="flex bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">
-                  <div key={index + "-dateTime"} className="border-r-2 border-red-400 px-2">{content.dateTime}</div>
-                  <div key={index + "-title"} className="border-r-2 border-red-400 px-2">{content.title}</div>
-                  <button onClick={() => deleteItem(index)} key={index + "-delete"} className="px-2 mr-2 bg-red-400 text-white hover:bg-red-500">Delete</button>
-                  <button key={index + "-viewdetails"} className="px-2 bg-red-400 text-white hover:bg-red-500">View</button>
+  if (user != null && remoteCalendarItems.length != 0) {
+    return (
+      <main>
+        <section className="flex flex-row justify-around items-center">
+          <section className="flex flex-col justify-center items-center h-screen w-full">
+            <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Calendar Items :</h1>
+            <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
+              {remoteCalendarItems.map((content, index) => (
+                <div key={index}>
+                  <div className="flex bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">
+                    <div key={index + "-dateTime"} className="border-r-2 border-red-400 px-2">{content.dateTime}</div>
+                    <div key={index + "-title"} className="border-r-2 border-red-400 px-2">{content.title}</div>
+                    <button onClick={() => deleteItem(index)} key={index + "-delete"} className="px-2 mr-2 bg-red-400 text-white hover:bg-red-500">Delete</button>
+                    <button key={index + "-viewdetails"} className="px-2 bg-red-400 text-white hover:bg-red-500">View</button>
+                  </div>
+                  <div key={index + "-details"} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">Details : {content.details}</div>
                 </div>
-                <div key={index + "-details"} className="bg-gray-200 text-slate-800 border-4 rounded mt-2 mb-2 w-full">Details : {content.details}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </section>
+          <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
         </section>
-        <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
-      </section>
-      <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
-    </main>
-  );
+        <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
+      </main>
+    );
+  } else if (user != null && remoteCalendarItems.length == 0) {
+    return (
+      <main>
+        <section className="flex flex-row justify-around items-center">
+          <section className="flex flex-col justify-center items-center h-screen w-full">
+            <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Nothing to display.</h1>
+            <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
+              Please choose another day or create a new calendar item by clicking on the calendar icon.
+            </div>
+          </section>
+          <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
+        </section>
+        <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <section className="flex flex-row justify-around items-center">
+          <section className="flex flex-col justify-center items-center h-screen w-full">
+            <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Cannot view calendar.</h1>
+            <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
+              Please sign in to view your calendar by clicking on the profile icon.
+            </div>
+          </section>
+          <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
+        </section>
+        <BottomNavbar setShowModal={setShowModal} setModalContent={setModalContent}/>
+      </main>
+    );
+  }
 }
