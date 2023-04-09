@@ -199,9 +199,10 @@ export default function Home() {
       <main>
         <section className="flex flex-row justify-around items-center">
           <section className="flex flex-col justify-center items-center h-screen w-full">
-            <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Nothing to display.</h1>
+            <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Nothing to see here...</h1>
+            <img src="nothing_to_see.jpg" className="w-4/12 mb-2 border-4 rounded-lg p-2 px-2 bg-red-400" alt="Nothing to see here meme." />
             <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
-              Please choose another day or create a new calendar item by clicking on the calendar icon.
+              Please choose another day, week, or month or create a new calendar item by clicking on the calendar icon.
             </div>
           </section>
           <Modal isVisible={showModal} modalContent={modalContent} onClose={() => setShowModal(false)} onItemCreation={handleItemCreation} onCalendarTypeChange={handleCalendarTypeChange} onDateTypeChange={handleDateTypeChange} />
@@ -215,6 +216,7 @@ export default function Home() {
         <section className="flex flex-row justify-around items-center">
           <section className="flex flex-col justify-center items-center h-screen w-full">
             <h1 className="mb-2 text-slate-800 text-xl border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">Cannot view calendar.</h1>
+            <img src="not_signed_in.jpg" className="w-4/12 mb-2 border-4 rounded-lg p-2 px-2 bg-red-400" alt="Not signed in meme." />
             <div className="border-4 rounded-lg p-2 px-2 bg-red-400 w-5/12">
               Please sign in to view your calendar by clicking on the profile icon.
             </div>
